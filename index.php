@@ -12,12 +12,14 @@
     <div id="chatbox">
 
     </div>
-    <form method="post" class="fixed-bottom" name="message" action="post.php">
+    <form method="post" enctype="multipart/form-data" class="fixed-bottom" action="post.php">
       <div class="form-inline">
-        <input type="text" class="form-control col m-3">
-        <button type="submit" class="btn btn-primary ml-auto col-auto mr-3">Submit</button>
+        <input type="text" name="message" class="form-control col m-3">
+        <input type="submit" class="btn btn-primary ml-auto col-auto mr-3"></input>
       </div>
     </form>
   </div>
+  <script src="node_modules/jquery/dist/jquery.js"
+  <script src="jqueryAJAX.js"></script>
 </body>
 </html>
