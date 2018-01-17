@@ -1,7 +1,7 @@
 <?php
 // define variables and set to empty values
 $message = "";
-$mykey = "heiner";
+// $mykey = "heiner";
 // input validation with test_input() not working
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // $user_name = test_input($_POST["user_name"]);
@@ -23,14 +23,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Escape user inputs for security
     $message = $conn->real_escape_string($_REQUEST['message']);
-
+    $mykey = $conn->real_escape_string($_REQUEST['mykey']);
+    $message_array = [
+      'message' => $message,
+      'user' => $mykey,
+    ];
     // attempt insert query execution
-    $sql = "INSERT INTO messages (value, mykey) VALUES ('$message', '$mykey')";
-    $sql2 = "SELECT row from table ORDER BY id DESC LIMIT 1";
+    $sql = "INSERT INTO messages (mykey, value) VALUES ('$mykey', '$message')";
+    // $sql2 = "SELECT row from table ORDER BY id DESC LIMIT 1";
 
-    $last_row = $conn->query($sql2);
+      // $last_row = $conn->query($sql2);
     if($conn->query($sql) == true) {
-      echo $last_row;
+      echo json_encode($message_array);
     }
     // $last_row = $conn->query($sql2);
     else {
