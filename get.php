@@ -1,8 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "tomklru270_heiner";
-$password = "1fusibuffen";
-$dbname = "tomklru270_gorillachat";
+// use config.php for server name, user name, password and database name
+include 'config.php';
 
 // declare result array
 $result_array = array();
