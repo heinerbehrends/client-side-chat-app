@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "gorillachat";
+$username = "tomklru270_heiner";
+$password = "1fusibuffen";
+$dbname = "tomklru270_gorillachat";
 
 // declare result array
 $result_array = array();
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // sql to get data from db
-$sql = "SELECT * FROM messages ORDER BY id DESC LIMIT 10";
+$sql = "SELECT * FROM messages ORDER BY id ASC";
 $result = $conn->query($sql);
 // print_r($result) ;
 // if there are results push them to the result_array

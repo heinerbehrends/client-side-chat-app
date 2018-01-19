@@ -9,9 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $message = $_POST["message"];
   // setup variables for db access
   $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "gorillachat";
+  $username = "tomklru270_heiner";
+  $password = "1fusibuffen";
+  $dbname = "tomklru270_gorillachat";
 
   // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
