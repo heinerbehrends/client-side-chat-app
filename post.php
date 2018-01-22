@@ -16,37 +16,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
+  // Prepare and bind
+  $stmt = $conn->prepare("INSERT INTO messages (mykey, value) VALUES (?, ?)");
+  $stmt->bind_param("ss",$mykey, $message);
 
   // Escape user inputs for security
-    $message = $conn->real_escape_string($_REQUEST['message']);
-    $mykey = $conn->real_escape_string($_REQUEST['mykey']);
-    $message_array = [
-      'message' => $message,
-      'user' => $mykey,
-    ];
-    // attempt insert query execution
-    $sql = "INSERT INTO messages (mykey, value) VALUES ('$mykey', '$message')";
-    // $sql2 = "SELECT row from table ORDER BY id DESC LIMIT 1";
+  $message = $conn->real_escape_string($_REQUEST['message']);
+  $mykey = $conn->real_escape_string($_REQUEST['mykey']);
+  $message_array = [
+    'message' => $message,
+    'user' => $mykey,
+  ];
+  // attempt insert query execution
+  // $sql = "INSERT INTO messages (mykey, value) VALUES ('$mykey', '$message')";
+  $stmt->execute();
+  // $sql2 = "SELECT row from table ORDER BY id DESC LIMIT 1";
 
-      // $last_row = $conn->query($sql2);
-    if($conn->query($sql) == true) {
-      echo json_encode($message_array);
-    }
-    // $last_row = $conn->query($sql2);
-    else {
-      echo "ERROR: Could not able to execute $sql. " . $conn->error;
-    }
+  // $last_row = $conn->query($sql2);
+  // if($conn->query($sql) == true) {
+  //   echo json_encode($message_array);
+  // }
+  // $last_row = $conn->query($sql2);
+  // else {
+  //   echo "ERROR: Could not able to execute query. " . $conn->error;
+  // }
+  echo json_encode($message_array);
+  // Close connection
+  $conn->close();
+}
 
-    // Close connection
-    $conn->close();
-  }
 
-
-  // input validation
-  function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-  }
-  ?>
+// input validation
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
