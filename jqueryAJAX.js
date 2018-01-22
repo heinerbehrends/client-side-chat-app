@@ -35,6 +35,7 @@ $(function() {
       }
     });
   }
+  checkNewMessages();
   window.setInterval(function() {checkNewMessages()}, 3000);
 
 
