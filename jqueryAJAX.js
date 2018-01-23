@@ -7,9 +7,7 @@ $(function() {
     }).done(function(data) {
       var updated_number_of_messages = data.length;
       if (updated_number_of_messages != number_of_messages) {
-        // new_messages = updated_number_of_messages - number_of_messages;
         for (var i = number_of_messages; i<updated_number_of_messages; i++) {
-          console.log(data[i].value);
           var message = data[i].value;
           var user = data[i].mykey;
           var post = makePost(user, message);
