@@ -20,7 +20,7 @@
           <form id="form2">
             <div class="form-inline">
               <input type="text" name="mykey" placeholder="Enter Name" class="form-control col m-3"></input>
-              <input type="submit" class="btn btn-primary ml-auto col-auto mr-3"></input>
+              <input type="submit" class="btn btn-primary col-auto m-3"></input>
             </div>
           </form>
         </div>
@@ -29,11 +29,17 @@
 
     <div id="chatbox"></div>
 
-    <form id="form" method="post" enctype="multipart/form-data" class="fixed-bottom" action="post.php">
+    <form id="file-form" action="upload.php" method="post" enctype="multipart/form-data">
+      <div class="form-inline m-3">
+        <input id="file-input" type="file" name="fileToUpload" id="fileToUpload" class="btn btn-primary">
+        <input type="submit" value="Upload File" name="submit" class="btn btn-lg btn-primary ml-auto">
+      </div>
+    </form>
+    <form id="form" method="put" enctype="multipart/form-data" class="fixed-bottom" action="post.php">
       <div class="form-inline">
         <!-- <input type="text" name="mykey" placeholder="Enter Name" class="form-control col m-3"> -->
         <input id="message" type="text" name="message" placeholder="Enter Message" class="form-control col m-3">
-        <input type="submit" class="btn btn-primary ml-auto col-auto mr-3"></input>
+        <input type="submit" class="btn btn-primary mx-auto col-auto mr-3"></input>
       </div>
     </form>
   </div>

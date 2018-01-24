@@ -3,7 +3,7 @@ $(function() {
   function checkNewMessages() {
     $.ajax({
       method: "GET",
-      url: "get.php",
+      url: "api.php?minumid=0",
     }).done(function(data) {
       var updated_number_of_messages = data.length;
       if (updated_number_of_messages != number_of_messages) {
@@ -43,16 +43,18 @@ $(function() {
     event.preventDefault();
     var form_data = $(this).serializeArray();
     form_data = form_data2.concat(form_data);
+    console.log(form_data);
     //
     $.ajax({
-      method: "POST",
-      url: form.attr('action'),
+      method: "PUT",
+      url: "api.php",
       data: form_data,
       success: function(data) {
+        console.log(data);
         // update the state of number_of_messages
         number_of_messages++;
         // parse the JSON data
-        var parsed = JSON.parse(data);
+        var parsed = data;
         $('#chatbox').append(makePost(parsed.user, parsed.message));
         $('#chatbox').animate({
           scrollTop: $('#chatbox').get(0).scrollHeight
@@ -62,14 +64,36 @@ $(function() {
       error: function(data) {
         console.log("An error occured");
       }
-      // console.log(number_of_messages);
     })
   })
+
+  var form3 = $("#file-form");
+  form3.submit(function(event) {
+    event.preventDefault();
+    var fileInput = $("#file-input");
+    var formData = new FormData;
+    formData.append("userfile", fileInput[0].files[0]);
+    console.log(formData);
+    $.ajax({
+      method: "POST",
+      url: "upload.php",
+      processData: false,
+      data: formData,
+      success: function(data) {
+        console.log(data);
+      },
+      error: function(data) {
+        console.log("An error occured");
+        console.log(data);
+      }
+    })
+  })
+
   // get messages from DB
   function getMessages() {
     $.ajax({
       method: "GET",
-      url: "get.php",
+      url: "api.php?minimumid=0",
     }).done(function(data) {
       // create the cards in a loop
       $.each(data, function(key, value) {
