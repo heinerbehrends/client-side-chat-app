@@ -1,11 +1,14 @@
 <?php
 $target_dir = "uploads/";
-print_r($_POST["[------WebKitFormBoundaryAFMfTZZBAiHDC6rI
-Content-Disposition:_form-data;_name]"]);
-$target_file = $target_dir . basename($_REQUEST["fileToUpload"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+$file_name = basename($_FILES["fileToUpload"]["name"]);
+$target_file = $target_dir . $file_name;
+
 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-  echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+  $file_upload_array = [
+    'fileName' => $file_name,
+    'link' => $target_file
+  ];
+
+  echo json_encode($file_upload_array, JSON_UNESCAPED_SLASHES);
 }
 ?>

@@ -27,22 +27,22 @@ $(function() {
   window.setInterval(function() {checkNewMessages()}, 3000);
 
   // function to merge markup and variables
-  function makePost(mykey, value) {
-    return '<p class="ml-3">' + mykey + ' wrote: <strong>' + value + '</strong></p>'
+  function makePost(userName, message) {
+    return '<p class="ml-3">' + userName + ' wrote: <strong>' + message + '</strong></p>'
   }
   // save the form data of the login screen in global variable and hide the modal
-  var form2 = $("#form2");
-  form2.submit(function(event) {
+  var loginForm = $("#login-form");
+  loginForm.submit(function(event) {
     event.preventDefault();
-    window.form_data2 = form2.serializeArray();
+    window.user_name = loginForm.serializeArray();
     $("#overlay").addClass("hidden");
   })
   // save the message and merge it with the username
-  var form = $("#form");
-  form.submit(function(event) {
+  var messageForm = $("#message-form");
+  messageForm.submit(function(event) {
     event.preventDefault();
     var form_data = $(this).serializeArray();
-    form_data = form_data2.concat(form_data);
+    form_data = user_name.concat(form_data);
     console.log(form_data);
     //
     $.ajax({
@@ -54,8 +54,8 @@ $(function() {
         // update the state of number_of_messages
         number_of_messages++;
         // parse the JSON data
-        var parsed = data;
-        $('#chatbox').append(makePost(parsed.user, parsed.message));
+        // var data = data;
+        $('#chatbox').append(makePost(data.user, data.message));
         $('#chatbox').animate({
           scrollTop: $('#chatbox').get(0).scrollHeight
         }, 10);
@@ -67,20 +67,27 @@ $(function() {
     })
   })
 
-  var form3 = $("#file-form");
-  form3.submit(function(event) {
+  function makeUploadPost(userName, link, fileName) {
+    return '<p class="ml-3">' + userName + ' uploaded <a href =' + link + '>' + fileName + '</a></p>'
+  }
+
+  var fileForm = $("#file-form");
+  fileForm.submit(function(event) {
     event.preventDefault();
     var fileInput = $("#file-input");
-    var formData = new FormData;
-    formData.append("userfile", fileInput[0].files[0]);
-    console.log(formData);
+    var fileFormData = new FormData;
+    fileFormData.append("fileToUpload", fileInput[0].files[0]);
+    console.log(fileFormData);
     $.ajax({
       method: "POST",
       url: "upload.php",
       processData: false,
-      data: formData,
+      contentType: false,
+      data: fileFormData,
       success: function(data) {
-        console.log(data);
+        // var uploadPost = makeUploadPost(data[])
+        var fileInfo = JSON.parse(data);
+        $("#chatbox").append(makeUploadPost(user_name, fileInfo.link, fileInfo.fileName));
       },
       error: function(data) {
         console.log("An error occured");
