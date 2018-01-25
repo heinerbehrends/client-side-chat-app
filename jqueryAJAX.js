@@ -77,7 +77,8 @@ $(function() {
     var fileInput = $("#file-input");
     var fileFormData = new FormData;
     fileFormData.append("fileToUpload", fileInput[0].files[0]);
-    console.log(fileFormData);
+    fileFormData.append("userName", user_name[0].value);
+    console.log(fileFormData.getAll("userName")[0]);
     $.ajax({
       method: "POST",
       url: "upload.php",
@@ -85,9 +86,7 @@ $(function() {
       contentType: false,
       data: fileFormData,
       success: function(data) {
-        // var uploadPost = makeUploadPost(data[])
-        var fileInfo = JSON.parse(data);
-        $("#chatbox").append(makeUploadPost(user_name, fileInfo.link, fileInfo.fileName));
+        console.log(data);
       },
       error: function(data) {
         console.log("An error occured");
